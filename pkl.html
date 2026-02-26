@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VANZYLOWY - About Us</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00f0ff;
+            --secondary: #ff00d4;
+            --accent: #9d4edd;
+            --dark-1: #0a0a12;
+            --dark-2: #12121f;
+            --dark-3: #1a1a2e;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glow-cyan: rgba(0, 240, 255, 0.4);
+            --glow-magenta: rgba(255, 0, 212, 0.4);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--dark-1);
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Ambient Background */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--glow-cyan) 0%, transparent 70%);
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--glow-magenta) 0%, transparent 70%);
+            bottom: -150px;
+            right: -150px;
+            animation-delay: -7s;
+        }
+
+        .orb-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(157, 78, 221, 0.3) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -14s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            25% {
+                transform: translate(50px, -30px) scale(1.05);
+            }
+
+            50% {
+                transform: translate(-30px, 50px) scale(0.95);
+            }
+
+            75% {
+                transform: translate(-50px, -20px) scale(1.02);
+            }
+        }
+
+        /* The Background Grid Pattern Overlay */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 80px 80px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Loading Screen - Dimatikan */
+        .loading-screen {
+            display: none;
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            z-index: 10;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header - Disembunyikan */
+        .header {
+            display: none;
+        }
+
+        /* Menu Grid - Disembunyikan */
+        .menu-grid {
+            display: none;
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+            opacity: 0;
+            padding: 80px 20px;
+            position: relative;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: sectionIn 0.6s ease-out forwards;
+        }
+
+        @keyframes sectionIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section Header Small */
+        .section-header-small {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 100;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 12px 20px;
+            border-radius: 50px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .small-logo {
+            width: 32px;
+            height: 32px;
+        }
+
+        .small-logo svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 10px var(--glow-cyan));
+        }
+
+        .small-brand h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: var(--primary);
+        }
+
+        .small-brand p {
+            font-size: 9px;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 2px;
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            color: rgba(255, 255, 255, 0.8);
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 0 20px var(--glow-cyan);
+        }
+
+        /* Section Content */
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 42px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary) 0%, #ffffff 50%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 2px;
+        }
+
+        /* About Section - DIPAKSA TAMPIL */
+        #about {
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            position: relative !important;
+            margin: 80px auto !important;
+            max-width: 1200px !important;
+            padding: 40px !important;
+            background: var(--dark-2) !important;
+            border: 2px solid var(--primary) !important;
+            border-radius: 20px !important;
+            box-shadow: 0 0 50px rgba(0, 240, 255, 0.2) !important;
+        }
+
+        .about-content {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 40px !important;
+            align-items: center !important;
+        }
+
+        .about-text h3 {
+            font-family: 'Syne', sans-serif !important;
+            font-size: 28px !important;
+            font-weight: 500 !important;
+            margin-bottom: 20px !important;
+            color: var(--primary) !important;
+        }
+
+        .about-text p {
+            color: rgba(255, 255, 255, 0.7) !important;
+            line-height: 1.8 !important;
+            margin-bottom: 15px !important;
+        }
+
+        .about-text a {
+            color: var(--primary) !important;
+            text-decoration: none !important;
+            position: relative !important;
+            padding-bottom: 2px !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .about-text a::after {
+            content: '' !important;
+            position: absolute !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            width: 0 !important;
+            height: 1px !important;
+            background: linear-gradient(90deg, var(--primary), var(--accent)) !important;
+            transition: width 0.3s ease !important;
+        }
+
+        .about-text a:hover {
+            color: #ffffff !important;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5) !important;
+        }
+
+        .about-text a:hover::after {
+            width: 100% !important;
+        }
+
+        .about-image {
+            position: relative !important;
+            border-radius: 20px !important;
+            overflow: hidden !important;
+        }
+
+        .about-image img {
+            width: 100% !important;
+            height: auto !important;
+            display: block !important;
+        }
+
+        .about-image::after {
+            content: '' !important;
+            position: absolute !important;
+            inset: 0 !important;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(157, 78, 221, 0.1)) !important;
+        }
+
+        /* Sembunyikan section lain */
+        #introduction,
+        #services,
+        #gallery,
+        #testimonials,
+        #contact {
+            display: none !important;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: auto;
+            padding: 30px 0;
+            text-align: center;
+            display: block !important;
+        }
+
+        .footer p {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 1px;
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .about-content {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .section-header-small {
+                position: relative;
+                top: auto;
+                left: auto;
+                margin-bottom: 20px;
+                justify-content: center;
+            }
+            
+            .back-btn {
+                position: relative;
+                top: auto;
+                right: auto;
+                display: block;
+                width: fit-content;
+                margin: 0 auto 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Ambient Background -->
+    <div class="ambient-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Grid Overlay -->
+    <div class="grid-overlay"></div>
+
+    <!-- Loading Screen (Disembunyikan) -->
+    <div class="loading-screen hidden" id="loadingScreen">
+        <div class="loader-ring"></div>
+        <div class="loading-text">Initializing Experience...</div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header (Disembunyikan) -->
+        <div class="header" id="mainHeader">
+            <div class="logo">
+                <svg viewBox="0 0 100 100">
+                    <defs>
+                        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#00f0ff"/>
+                            <stop offset="100%" style="stop-color:#ff00d4"/>
+                        </linearGradient>
+                    </defs>
+                    <polygon points="50,5 95,30 95,70 50,95 5,70 5,30" fill="none" stroke="url(#logoGradient)" stroke-width="2"/>
+                    <polygon points="50,20 80,37 80,63 50,80 20,63 20,37" fill="none" stroke="url(#logoGradient)" stroke-width="1.5" opacity="0.6"/>
+                    <circle cx="50" cy="50" r="12" fill="url(#logoGradient)" opacity="0.3"/>
+                    <circle cx="50" cy="50" r="6" fill="url(#logoGradient)"/>
+                </svg>
+            </div>
+            <h1 class="brand-name">VANZYLOWY</h1>
+            <p class="tagline">Digital Excellence Redefined</p>
+        </div>
+
+        <!-- Menu Grid (Disembunyikan) -->
+        <div class="menu-grid" id="menuGrid">
+            <div class="menu-item" data-section="introduction">
+                <div class="menu-badge">IN</div>
+                <div class="menu-title">Introduction</div>
+            </div>
+            <div class="menu-item" data-section="services">
+                <div class="menu-badge">SV</div>
+                <div class="menu-title">Services</div>
+            </div>
+            <div class="menu-item" data-section="gallery">
+                <div class="menu-badge">EP</div>
+                <div class="menu-title">Experience</div>
+            </div>
+            <div class="menu-item" data-section="testimonials">
+                <div class="menu-badge">TM</div>
+                <div class="menu-title">Testimonials</div>
+            </div>
+            <div class="menu-item" data-section="about">
+                <div class="menu-badge">AB</div>
+                <div class="menu-title">About</div>
+            </div>
+            <div class="menu-item" data-section="contact">
+                <div class="menu-badge">CT</div>
+                <div class="menu-title">Contact</div>
+            </div>
+        </div>
+
+        <!-- Content Sections -->
+        <div id="contentArea">
+            <!-- Introduction (Disembunyikan) -->
+            <div class="content-section" id="introduction"></div>
+
+            <!-- Services (Disembunyikan) -->
+            <div class="content-section" id="services"></div>
+
+            <!-- Gallery (Disembunyikan) -->
+            <div class="content-section" id="gallery"></div>
+
+            <!-- Testimonials (Disembunyikan) -->
+            <div class="content-section" id="testimonials"></div>
+
+            <!-- ABOUT SECTION - TAMPIL -->
+            <div class="content-section active" id="about">
+                <div class="section-header-small">
+                    <div class="small-logo">
+                        <svg viewBox="0 0 100 100">
+                            <defs>
+                                <linearGradient id="smallLogoGrad5" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#00f0ff"/>
+                                    <stop offset="100%" style="stop-color:#ff00d4"/>
+                                </linearGradient>
+                            </defs>
+                            <polygon points="50,10 85,32 85,68 50,90 15,68 15,32" fill="none" stroke="url(#smallLogoGrad5)" stroke-width="3"/>
+                            <circle cx="50" cy="50" r="10" fill="url(#smallLogoGrad5)"/>
+                        </svg>
+                    </div>
+                    <div class="small-brand">
+                        <h3>VANZYLOWY</h3>
+                        <p>Digital Excellence</p>
+                    </div>
+                </div>
+                <button class="back-btn" onclick="alert('Back to menu (disabled for testing)')">← Back to Menu</button>
+
+                <div class="section-header">
+                    <h2 class="section-title">About Us</h2>
+                    <p class="section-subtitle">Our story, mission, and values</p>
+                </div>
+
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3>Pioneering Digital Innovation</h3>
+                        <p>Founded in 2020, VANZYLOWY has grown from a small team of passionate developers into a leading digital agency. We believe in pushing boundaries and creating solutions that make a real difference.</p>
+                        <p>Our diverse team brings together expertise from design, development, AI, and strategy to deliver holistic solutions that drive business growth and user engagement.</p>
+                        <p>We're not just building products – we're shaping the future of digital experiences.</p>
+                        <p>Discover AI-optimized web templates from <a href="https://templatemo.com" rel="nofollow" target="_blank">TemplateMo</a>. Maximize efficiency with the timer platform at <a href="https://timermo.com" rel="nofollow" target="_blank">TimerMo</a>. Design like a pro using vector stickers from <a href="https://www.vectorsticker.com" rel="nofollow" target="_blank">VectorSticker</a>.</p>
+                    </div>
+                    <div class="about-image">
+                        <!-- Ganti dengan placeholder jika gambar tidak ada -->
+                        <img src="https://via.placeholder.com/600x400/1a1a2e/00f0ff?text=Our+Team" alt="Our Team">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact (Disembunyikan) -->
+            <div class="content-section" id="contact"></div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2026 VANZYLOWY. Crafted with passion. Design by <a href="https://templatemo.com" target="_blank">TemplateMo</a></p>
+        </footer>
+    </div>
+
+    <script>
+        // Minimal JavaScript untuk testing
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sembunyikan loading screen
+            const loadingScreen = document.getElementById('loadingScreen');
+            if (loadingScreen) {
+                loadingScreen.classList.add('hidden');
+            }
+            
+            // About section sudah aktif dari HTML
+            console.log('About section is active');
+        });
+    </script>
+</body>
+</html>

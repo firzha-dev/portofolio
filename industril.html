@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VANZYLOWY - About Us (Justified)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00f0ff;
+            --secondary: #ff00d4;
+            --accent: #9d4edd;
+            --dark-1: #0a0a12;
+            --dark-2: #12121f;
+            --dark-3: #1a1a2e;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glow-cyan: rgba(0, 240, 255, 0.4);
+            --glow-magenta: rgba(255, 0, 212, 0.4);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--dark-1);
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Ambient Background */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--glow-cyan) 0%, transparent 70%);
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--glow-magenta) 0%, transparent 70%);
+            bottom: -150px;
+            right: -150px;
+            animation-delay: -7s;
+        }
+
+        .orb-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(157, 78, 221, 0.3) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -14s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            25% {
+                transform: translate(50px, -30px) scale(1.05);
+            }
+
+            50% {
+                transform: translate(-30px, 50px) scale(0.95);
+            }
+
+            75% {
+                transform: translate(-50px, -20px) scale(1.02);
+            }
+        }
+
+        /* The Background Grid Pattern Overlay */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 80px 80px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Loading Screen - Dimatikan */
+        .loading-screen {
+            display: none;
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            z-index: 10;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header & Menu Grid - Disembunyikan */
+        .header, .menu-grid {
+            display: none;
+        }
+
+        /* Content Sections - hanya about yang aktif */
+        .content-section {
+            display: none;
+            opacity: 0;
+            padding: 60px 20px;
+            position: relative;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: sectionIn 0.6s ease-out forwards;
+        }
+
+        @keyframes sectionIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section Header Small */
+        .section-header-small {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 100;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 12px 20px;
+            border-radius: 50px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .small-logo {
+            width: 32px;
+            height: 32px;
+        }
+
+        .small-logo svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 10px var(--glow-cyan));
+        }
+
+        .small-brand h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: var(--primary);
+        }
+
+        .small-brand p {
+            font-size: 9px;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 2px;
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            color: rgba(255, 255, 255, 0.8);
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 0 20px var(--glow-cyan);
+        }
+
+        /* Section Header */
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 42px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary) 0%, #ffffff 50%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            
+        }
+
+        .section-subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 2px;
+        }
+
+        /* --- ABOUT SECTION --- */
+        /* Konten di dalam section-header setelah judul akan dijustify */
+        #about {
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            position: relative !important;
+            margin: 60px auto !important;
+            max-width: 1000px !important;
+            padding: 40px !important;
+            background: rgba(10, 10, 18, 0.6) !important;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border) !important;
+            border-radius: 24px !important;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 0 2px rgba(0,240,255,0.1) !important;
+        }
+
+        /* Semua konten selain .section-title dan .section-subtitle dalam #about dijustify */
+        #about .section-header > *:not(.section-title):not(.section-subtitle) {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        /* Konten utama di luar section-header juga dijustify */
+        .about-content, .about-text, .about-text p, .about-text ul, .about-text div, 
+        .content-wrapper, .industry-content, .kesimpulan, .alur {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        /* Header kecil dan tombol back tidak perlu dijustify */
+        .section-header-small, .back-btn {
+            text-align: left;
+        }
+
+        /* Styling konten */
+        .industry-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        /* Style khusus untuk h2 dengan class section-title */
+h2.section-title {
+    text-align: center; /* atau sesuai yang Anda mau */
+    font-size: 42px; /* ukuran lebih besar untuk judul */
+    margin-bottom: 15px;
+    background: linear-gradient(135deg, var(--primary) 0%, #ffffff 50%, var(--secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    /* properti lain yang hanya untuk section-title */
+}
+        h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            margin: 30px 0 15px;
+            color: var(--primary);
+            text-align: left; /* Judul bab tetap rata kiri */
+        }
+
+        h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 20px;
+            margin: 20px 0 10px;
+            color: var(--secondary);
+            text-align: left;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.85);
+        }
+
+        .alur {
+            background: rgba(0, 240, 255, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 18px 20px;
+            margin: 25px 0;
+            font-family: monospace;
+            font-size: 16px;
+            border-radius: 0 12px 12px 0;
+            color: #aaffff;
+            text-align: justify;
+        }
+
+        ul {
+            margin: 15px 0 25px 25px;
+            color: rgba(255,255,255,0.85);
+        }
+        li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        li b {
+            color: var(--primary);
+        }
+
+        .about-image {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            margin: 0 auto;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0,240,255,0.2);
+            max-width: 70%;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        .about-image:hover img {
+            transform: scale(1.02);
+        }
+
+        .about-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(157, 78, 221, 0.15));
+            pointer-events: none;
+        }
+
+        .kesimpulan {
+            background: rgba(157, 78, 221, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 35px 0 20px;
+            border: 1px solid var(--accent);
+            box-shadow: 0 0 30px rgba(157,78,221,0.2);
+        }
+        .kesimpulan h2 {
+            margin-top: 0;
+            color: var(--accent);
+        }
+
+        /* Sembunyikan section lain */
+        #introduction, #services, #gallery, #testimonials, #contact {
+            display: none !important;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: auto;
+            padding: 30px 0 10px;
+            text-align: center;
+        }
+
+        .footer p {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 32px;
+            }
+            
+            .section-header-small {
+                position: relative;
+                top: auto;
+                left: auto;
+                margin-bottom: 20px;
+                justify-content: center;
+                width: fit-content;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .back-btn {
+                position: relative;
+                top: auto;
+                right: auto;
+                display: block;
+                width: fit-content;
+                margin: 0 auto 30px;
+            }
+            
+            #about {
+                padding: 30px 20px !important;
+                margin: 30px 15px !important;
+            }
+            
+            h2 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Ambient Background -->
+    <div class="ambient-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Grid Overlay -->
+    <div class="grid-overlay"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header (Disembunyikan) & Menu Grid (Disembunyikan) sudah diatur via CSS -->
+
+        <!-- Content Sections -->
+        <div id="contentArea">
+            <!-- ABOUT SECTION - TAMPIL DENGAN TEKS RATA KANAN-KIRI -->
+            <div class="content-section active" id="about">
+                <div class="section-header-small">
+                    <div class="small-logo">
+                        <svg viewBox="0 0 100 100">
+                            <defs>
+                                <linearGradient id="smallLogoGrad5" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#00f0ff"/>
+                                    <stop offset="100%" style="stop-color:#ff00d4"/>
+                                </linearGradient>
+                            </defs>
+                            <polygon points="50,10 85,32 85,68 50,90 15,68 15,32" fill="none" stroke="url(#smallLogoGrad5)" stroke-width="3"/>
+                            <circle cx="50" cy="50" r="10" fill="url(#smallLogoGrad5)"/>
+                        </svg>
+                    </div>
+                    <div class="small-brand">
+                        <h3>VANZYLOWY</h3>
+                        <p>Digital Excellence</p>
+                    </div>
+                </div>
+                <button class="back-btn" onclick="alert('Back to menu (disabled for testing)')">← Back to Menu</button>
+
+                <!-- Section header: judul dan subtitle tetap rata tengah, konten lain rata kanan-kiri -->
+                <div class="section-header">
+                    <h2 class="section-title">About Us</h2>
+                    <p class="section-subtitle">Our story, mission, and values</p>
+                </div>
+                    
+                    <!-- Seluruh konten di bawah ini akan rata kanan-kiri karena CSS -->
+                    <div class="industry-content">
+                        <h2>1. PT Indonusa Telemedia</h2>
+                        <p>
+                            Kunjungan industri ke PT Indonusa Telemedia memberikan wawasan mengenai sistem penyiaran televisi dan satelit.
+                            Kami memahami proses penyiaran mulai dari produksi di studio hingga siaran diterima oleh penonton di rumah.
+                        </p>
+
+                        <div class="alur">
+                            Studio → Control Room → Encoding → MUX → Modulator → Satelit → Pemancar → TV Penonton
+                        </div>
+
+                        <p>
+                            Pengiriman sinyal dilakukan melalui proses uplink → satelit → downlink → penerima siaran dengan sistem multicast.
+                        </p>
+
+                        <!-- Gambar ditempatkan di sini agar menyatu dengan alur teks -->
+                        <div class="about-image">
+                            <!-- Menggunakan placeholder karena file images/foto kujus.jpg mungkin tidak ada -->
+                            <img src="images/kunjus telkom.jpg" alt="Dokumentasi Kunjungan Industri telkom">
+                        </div>
+
+                        <p>Perangkat pendukung penyiaran:</p>
+                        <ul>
+                            <li><b>Analyzer</b> – Mengecek kualitas sinyal</li>
+                            <li><b>IRD</b> – Mengubah sinyal digital menjadi audio dan video</li>
+                            <li><b>DA</b> – Membagi sinyal</li>
+                            <li><b>MUX</b> – Menggabungkan beberapa channel</li>
+                            <li><b>Modulator</b> – Mengirim sinyal ke satelit</li>
+                        </ul>
+
+                        <p>
+                            Kami juga memahami perkembangan TV dari analog ke digital serta jenis layanan seperti FTA, DTH, IPTV, dan OPV.
+                        </p>
+
+                        <h2>2. Badan Diklat PKN BPK RI</h2>
+                        <p>
+                            Kunjungan ke Badan Diklat PKN BPK RI memberikan pemahaman tentang sistem kerja pemerintahan,
+                            khususnya dalam pengelolaan dan pemeriksaan keuangan negara.
+                        </p>
+                        
+                         <!-- Gambar ditempatkan di sini agar menyatu dengan alur teks -->
+                        <div class="about-image">
+                            <!-- Menggunakan placeholder karena file images/foto kujus.jpg mungkin tidak ada -->
+                            <img src="images/foto kujus.jpg" alt="Dokumentasi Kunjungan Industri">
+                        </div>
+
+                        <p>
+                            Kami belajar pentingnya transparansi, ketelitian, integritas, dan tanggung jawab dalam memeriksa laporan keuangan.
+                            Kami juga melihat budaya kerja profesional dan terstruktur dengan dukungan teknologi.
+                        </p>
+
+                        <div class="kesimpulan">
+                            <h2>Kesimpulan</h2>
+                            <p>
+                                Kegiatan kunjungan industri ini menambah wawasan kami tentang sistem penyiaran televisi
+                                dan pengelolaan keuangan negara. Pengalaman ini memotivasi kami untuk lebih disiplin,
+                                meningkatkan kemampuan, dan mempersiapkan diri menghadapi dunia kerja.
+                            </p>
+                        </div>
+                    </div> <!-- end industry-content -->
+                </div> <!-- end section-header -->
+            </div> <!-- end about section -->
+
+            <!-- Section lain disembunyikan -->
+            <div class="content-section" id="introduction"></div>
+            <div class="content-section" id="services"></div>
+            <div class="content-section" id="gallery"></div>
+            <div class="content-section" id="testimonials"></div>
+            <div class="content-section" id="contact"></div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2026 VANZYLOWY. Crafted with passion. Design by <a href="https://www.instagram.com/firrrr.aa_" target="_blank">firfir</a></p>
+        </footer>
+    </div>
+
+    <script>
+        // Minimal JavaScript untuk testing
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('About section is active, all text justified (except main title).');
+        });
+    </script>
+</body>
+</html>
