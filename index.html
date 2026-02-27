@@ -8,6 +8,322 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* ===== STYLE DARI INDUSTRIL.HTML (DIAMBIL UTUH) ===== */
+        /* Ambient Background */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 240, 255, 0.4) 0%, transparent 70%);
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 0, 212, 0.4) 0%, transparent 70%);
+            bottom: -150px;
+            right: -150px;
+            animation-delay: -7s;
+        }
+
+        .orb-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(157, 78, 221, 0.3) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -14s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -30px) scale(1.05); }
+            50% { transform: translate(-30px, 50px) scale(0.95); }
+            75% { transform: translate(-50px, -20px) scale(1.02); }
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 80px 80px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Style untuk konten industri (diambil dari industril.html) */
+        .industry-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .industry-content h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            margin: 30px 0 15px;
+            color: #00f0ff;
+            text-align: left;
+        }
+        
+        .industry-content h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 20px;
+            margin: 20px 0 10px;
+            color: #ff00d4;
+            text-align: left;
+        }
+        
+        .industry-content p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.85);
+            text-align: justify;
+            text-justify: inter-word;
+        }
+        
+        .industry-content .alur {
+            background: rgba(0, 240, 255, 0.1);
+            border-left: 4px solid #00f0ff;
+            padding: 18px 20px;
+            margin: 25px 0;
+            font-family: monospace;
+            font-size: 16px;
+            border-radius: 0 12px 12px 0;
+            color: #aaffff;
+            text-align: justify;
+        }
+        
+        .industry-content ul {
+            margin: 15px 0 25px 25px;
+            color: rgba(255,255,255,0.85);
+        }
+        
+        .industry-content li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        
+        .industry-content li b {
+            color: #00f0ff;
+        }
+        
+        .industry-content .about-image {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            margin: 20px auto;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 30px rgba(0,240,255,0.2);
+            max-width: 70%;
+        }
+        
+        .industry-content .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        .industry-content .about-image:hover img {
+            transform: scale(1.02);
+        }
+        
+        .industry-content .about-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(157, 78, 221, 0.15));
+            pointer-events: none;
+        }
+        
+        .industry-content .kesimpulan {
+            background: rgba(157, 78, 221, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 35px 0 20px;
+            border: 1px solid #9d4edd;
+            box-shadow: 0 0 30px rgba(157,78,221,0.2);
+        }
+        
+        .industry-content .kesimpulan h2 {
+            margin-top: 0;
+            color: #9d4edd;
+        }
+        
+        /* Back button styling (dari industril.html) */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50px;
+            color: rgba(255, 255, 255, 0.8);
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: #00f0ff;
+            color: #00f0ff;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+        }
+
+        /* Style untuk modal/detail section */
+        .detail-section {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a12;
+            z-index: 1000;
+            overflow-y: auto;
+            display: none;
+            padding: 20px;
+        }
+
+        .detail-section.active {
+            display: block;
+        }
+
+        .detail-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-header {
+            position: sticky;
+            top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            z-index: 100;
+            background: rgba(10, 10, 18, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .detail-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .detail-logo svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .detail-logo-text h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: #00f0ff;
+            margin: 0;
+        }
+
+        .detail-logo-text p {
+            font-size: 9px;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.5);
+            margin: 2px 0 0;
+        }
+
+        .close-detail {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50px;
+            color: rgba(255, 255, 255, 0.8);
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: none;
+        }
+
+        .close-detail:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: #00f0ff;
+            color: #00f0ff;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+        }
+
+        /* Fix untuk link di gallery */
+        .gallery-overlay a {
+            text-decoration: none;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .gallery-overlay a:hover h4 {
+            color: #00f0ff;
+        }
+        
+        .gallery-overlay h4 {
+            transition: color 0.3s ease;
+        }
+        
+        /* Main menu tetap di atas */
+        .menu-grid {
+            position: relative;
+            z-index: 50;
+        }
+        
+        .footer {
+            position: relative;
+            z-index: 40;
+        }
+    </style>
 <!-- 
 
     firdaa 
@@ -415,14 +731,14 @@
                     <div class="gallery-item" data-category="web">
                         <img src="images/coding-screen.jpg" alt="Project 1">
                         <div class="gallery-overlay">
-                            <a href="pkl.html" target="_blank"><h4>PRAKERIN</h4></a><h4>
+                            <a href="javascript:void(0);" onclick="showIndustriDetail('pkl')"><h4>PRAKERIN</h4></a>
                             <p>PT ELSEWEDY ELECTRIC INDONESIA</p>
                         </div>
                     </div>
                     <div class="gallery-item" data-category="mobile">
                         <img src="images/ai-mobile-app.jpg" alt="Project 2">
                         <div class="gallery-overlay">
-                            <a href="industril.html" target="_blank"><h4>Kunjungan Industri</h4></a><h4></h4>
+                            <a href="javascript:void(0);" onclick="showIndustriDetail('industri')"><h4>Kunjungan Industri</h4></a>
                             <p>PT TELKOM STELIT Dan DIKLAT BPK</p>
                         </div>
                     </div>
@@ -652,7 +968,251 @@
             <p>© 2026 VANZYLOWY. Crafted with passion. Design by <a href="https://templatemo.com" target="_blank">TemplateMo</a></p>
         </footer>
     </div>
-<script src="script.js"></script>
-</body>
 
+    <!-- Detail Section untuk Konten Industri (dari industril.html) -->
+    <div class="detail-section" id="industriDetail">
+        <div class="detail-content">
+            <div class="detail-header">
+                <div class="detail-logo">
+                    <svg viewBox="0 0 100 100">
+                        <defs>
+                            <linearGradient id="detailLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00f0ff"/>
+                                <stop offset="100%" style="stop-color:#ff00d4"/>
+                            </linearGradient>
+                        </defs>
+                        <polygon points="50,10 85,32 85,68 50,90 15,68 15,32" fill="none" stroke="url(#detailLogoGrad)" stroke-width="3"/>
+                        <circle cx="50" cy="50" r="10" fill="url(#detailLogoGrad)"/>
+                    </svg>
+                    <div class="detail-logo-text">
+                        <h3>VANZYLOWY</h3>
+                        <p>Digital Excellence</p>
+                    </div>
+                </div>
+                <button class="close-detail" onclick="hideIndustriDetail()">← Back to Experience</button>
+            </div>
+
+            <!-- Konten Kunjungan Industri (diambil utuh dari industril.html) -->
+            <div class="section-header" style="text-align: center; margin-bottom: 30px;">
+                <h2 class="section-title" style="font-family: 'Syne', sans-serif; font-size: 42px; font-weight: 600; background: linear-gradient(135deg, #00f0ff 0%, #ffffff 50%, #ff00d4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Kunjungan Industri</h2>
+                <p class="section-subtitle" style="font-size: 14px; color: rgba(255, 255, 255, 0.5); letter-spacing: 2px;">kami mengunjungi beberapa perusahaan/Tempat Kerja untuk memahami dunia kerja</p>
+            </div>
+            
+            <div class="industry-content">
+                <h2>1. PT. Telkom Satelit Indonesia</h2>
+                <p>
+                    Kunjungan industri ke PT. Telkom Satelit Indonesia/Indonusa Telemedia memberikan wawasan mengenai sistem penyiaran televisi dan satelit.
+                    Kami memahami proses penyiaran mulai dari produksi di studio hingga siaran diterima oleh penonton di rumah.
+                </p>
+
+                <div class="alur">
+                    Studio → Control Room → Encoding → MUX → Modulator → Satelit → Pemancar → TV Penonton
+                </div>
+
+                <p>
+                    Pengiriman sinyal dilakukan melalui proses uplink → satelit → downlink → penerima siaran dengan sistem multicast.
+                </p>
+                <br>
+
+                <div class="about-image">
+                    <img src="images/kunjus telkom.jpg" alt="Dokumentasi Kunjungan Industri telkom" onerror="this.src='https://via.placeholder.com/800x400?text=Kunjungan+Industri+Telkom'">
+                </div>
+                <br>
+
+                <p>Perangkat pendukung penyiaran:</p>
+                <ul>
+                    <li><b>Analyzer</b> – Mengecek kualitas sinyal</li>
+                    <li><b>IRD</b> – Mengubah sinyal digital menjadi audio dan video</li>
+                    <li><b>DA</b> – Membagi sinyal</li>
+                    <li><b>MUX</b> – Menggabungkan beberapa channel</li>
+                    <li><b>Modulator</b> – Mengirim sinyal ke satelit</li>
+                </ul>
+
+                <h2>2. Badan Diklat PKN BPK RI</h2>
+                <p>
+                    Kunjungan ke Badan Diklat PKN BPK RI memberikan pemahaman tentang sistem kerja pemerintahan,
+                    khususnya dalam pengelolaan dan pemeriksaan keuangan negara.
+                </p>
+                <br>
+                
+                <div class="about-image">
+                    <img src="images/foto kujus.jpg" alt="Dokumentasi Kunjungan Industri" onerror="this.src='https://via.placeholder.com/800x400?text=Kunjungan+BPK+RI'">
+                </div>
+                <br>
+
+                <p>
+                    Kami belajar pentingnya transparansi, ketelitian, integritas, dan tanggung jawab dalam memeriksa laporan keuangan.
+                    Kami juga melihat budaya kerja profesional dan terstruktur dengan dukungan teknologi.
+                </p>
+
+                <div class="kesimpulan">
+                    <h2>Kesimpulan</h2>
+                    <p>
+                        Kegiatan kunjungan industri ini menambah wawasan kami tentang sistem penyiaran televisi
+                        dan pengelolaan keuangan negara. Pengalaman ini memotivasi kami untuk lebih disiplin,
+                        meningkatkan kemampuan, dan mempersiapkan diri menghadapi dunia kerja.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Footer dalam detail -->
+            <footer class="footer" style="margin-top: 50px;">
+                <p>© 2026 VANZYLOWY. Crafted with passion. Design by <a href="https://www.instagram.com/firrrr.aa_" target="_blank">firfir</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Detail Section untuk PKL (jika diperlukan) -->
+    <div class="detail-section" id="pklDetail">
+        <div class="detail-content">
+            <div class="detail-header">
+                <div class="detail-logo">
+                    <svg viewBox="0 0 100 100">
+                        <defs>
+                            <linearGradient id="detailLogoGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00f0ff"/>
+                                <stop offset="100%" style="stop-color:#ff00d4"/>
+                            </linearGradient>
+                        </defs>
+                        <polygon points="50,10 85,32 85,68 50,90 15,68 15,32" fill="none" stroke="url(#detailLogoGrad2)" stroke-width="3"/>
+                        <circle cx="50" cy="50" r="10" fill="url(#detailLogoGrad2)"/>
+                    </svg>
+                    <div class="detail-logo-text">
+                        <h3>VANZYLOWY</h3>
+                        <p>Digital Excellence</p>
+                    </div>
+                </div>
+                <button class="close-detail" onclick="hideIndustriDetail()">← Back to Experience</button>
+            </div>
+
+            <div class="section-header" style="text-align: center; margin-bottom: 30px;">
+                <h2 class="section-title" style="font-family: 'Syne', sans-serif; font-size: 42px; font-weight: 600; background: linear-gradient(135deg, #00f0ff 0%, #ffffff 50%, #ff00d4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">PRAKERIN</h2>
+                <p class="section-subtitle" style="font-size: 14px; color: rgba(255, 255, 255, 0.5); letter-spacing: 2px;">Pengalaman Praktik Kerja Industri</p>
+            </div>
+            
+            <div class="industry-content">
+                <h2>PT ELSEWEDY ELECTRIC INDONESIA</h2>
+                <p>
+                    Selama Praktik Kerja Industri (PRAKERIN) di PT ELSEWEDY ELECTRIC INDONESIA, kami mendapatkan pengalaman berharga tentang dunia kerja profesional di perusahaan manufaktur komponen listrik.
+                </p>
+                
+                <div class="about-image">
+                    <img src="images/coding-screen.jpg" alt="PRAKERIN" onerror="this.src='https://via.placeholder.com/800x400?text=PRAKERIN+ELSEWEDY'">
+                </div>
+                
+                <h3>Pengalaman dan Pembelajaran:</h3>
+                <ul>
+                    <li><b>Produksi</b> - Memahami proses produksi komponen listrik dan kontrol kualitas</li>
+                    <li><b>Maintenance</b> - Belajar perawatan mesin produksi dan troubleshooting</li>
+                    <li><b>Administrasi</b> - Pengalaman mengelola dokumen dan laporan produksi</li>
+                </ul>
+                
+                <p>
+                    Pengalaman ini mengajarkan kami tentang disiplin kerja, tanggung jawab, dan pentingnya keselamatan kerja di lingkungan industri.
+                </p>
+                
+                <div class="kesimpulan">
+                    <h2>Kesimpulan</h2>
+                    <p>
+                        PRAKERIN di PT ELSEWEDY ELECTRIC INDONESIA memberikan wawasan nyata tentang dunia industri manufaktur, 
+                        mempersiapkan kami untuk menghadapi tantangan di dunia kerja setelah lulus.
+                    </p>
+                </div>
+            </div>
+            
+            <footer class="footer" style="margin-top: 50px;">
+                <p>© 2026 VANZYLOWY. Crafted with passion. Design by <a href="https://www.instagram.com/firrrr.aa_" target="_blank">firfir</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Fungsi untuk menampilkan detail industri
+        function showIndustriDetail(type) {
+            if (type === 'industri') {
+                document.getElementById('industriDetail').classList.add('active');
+                document.body.style.overflow = 'hidden'; // Mencegah scroll di background
+            } else if (type === 'pkl') {
+                document.getElementById('pklDetail').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // Fungsi untuk menyembunyikan detail
+        function hideIndustriDetail() {
+            document.getElementById('industriDetail').classList.remove('active');
+            document.getElementById('pklDetail').classList.remove('active');
+            document.body.style.overflow = ''; // Kembalikan scroll
+        }
+
+        // Fungsi untuk navigasi menu (dari script.js kamu)
+        function backToMenu() {
+            // Sembunyikan semua section
+            var sections = document.querySelectorAll('.content-section');
+            sections.forEach(function(section) {
+                section.classList.remove('active');
+            });
+            // Tampilkan menu grid
+            document.getElementById('menuGrid').style.display = 'grid';
+            document.getElementById('mainHeader').style.display = 'block';
+            document.getElementById('mainFooter').style.display = 'block';
+        }
+
+        // Fungsi filter gallery (placeholder, sesuaikan dengan script.js kamu)
+        function filterGallery(category, btn) {
+            // Update active button
+            var filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(function(b) {
+                b.classList.remove('active');
+            });
+            btn.classList.add('active');
+            
+            // Filter items (implementasi sederhana)
+            var items = document.querySelectorAll('.gallery-item');
+            items.forEach(function(item) {
+                if (category === 'all' || item.dataset.category === category) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Fungsi switch tab
+        function switchTab(btn, tabId) {
+            // Update active button
+            var tabBtns = document.querySelectorAll('.tab-btn');
+            tabBtns.forEach(function(b) {
+                b.classList.remove('active');
+            });
+            btn.classList.add('active');
+            
+            // Show selected tab pane
+            var panes = document.querySelectorAll('.tab-pane');
+            panes.forEach(function(pane) {
+                pane.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // Load initial section (dari script.js kamu)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sembunyikan loading screen setelah 2 detik
+            setTimeout(function() {
+                document.getElementById('loadingScreen').style.display = 'none';
+            }, 2000);
+            
+            // Animasi angka di metrics (placeholder)
+            // ... kode lain dari script.js ...
+        });
+
+        // Tutup detail jika klik tombol ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                hideIndustriDetail();
+            }
+        });
+    </script>
+</body>
 </html>
